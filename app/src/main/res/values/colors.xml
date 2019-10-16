@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ColorPrimary">#3F51B5</color>
+    <color name="ColorPrimaryDark">#303F9F</color>
+    <color name="ColorAccent">#E91E63</color>
+    <color name="ColorActionBarTitle">#F06292</color>
+
+
+    <color name="colorBlanco">#FFFFFF</color>
+    <color name="fondo">#717E8D</color>
+    <color name="white">#FFFF</color>
+    <color name="black">#161414</color>
+    <color name="orange">#FF3D00</color>
+    <color name="grisfono">#DAD7D7</color>
+    <color name="azul">#0D144B</color>
+</resources>
