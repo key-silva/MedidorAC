@@ -17,8 +17,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat">
-        <activity android:name=".lista_porducto_electronicos"></activity>
+        android:theme="@style/AppTheme">
+        <activity android:name=".list_uno"></activity>
+        <activity android:name=".cuenta_datos_personales" />
+        <activity android:name=".lista_porducto_electronicos" />
         <activity android:name=".limite_de_consumo_electrico" />
         <activity android:name=".Graficas_vistas" />
         <activity android:name=".scanner" />

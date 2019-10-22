@@ -18,7 +18,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Medidor Corriente"
+        android:text="Tesla Electric"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textColorLink="@color/white"
@@ -41,6 +41,8 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:hint="Usuario"
+        android:textColorHint="@color/colorBlanco"
+        android:textColor="@color/colorBlanco"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -58,6 +60,8 @@
         android:layout_marginRight="8dp"
         android:ems="10"
         android:hint="Contraseña"
+        android:textColor="@color/colorBlanco"
+        android:textColorHint="@color/colorBlanco"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -73,6 +77,7 @@
         android:layout_marginRight="52dp"
         android:background="@mipmap/buttonuno"
         android:onClick="Clickbtn"
+        android:textColor="@color/colorBlanco"
         android:text="Ingresar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textpass" />
@@ -97,6 +102,7 @@
         android:layout_marginLeft="55dp"
         android:layout_marginTop="8dp"
         android:text="Ingresar:"
+        android:textColor="@color/colorBlanco"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -111,6 +117,7 @@
         android:onClick="scanner"
         android:text="Scanner QR medidor de corriente"
         android:textSize="15dp"
+        android:textColor="@color/colorBlanco"
         app:layout_constraintStart_toEndOf="@+id/imageView9"
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
@@ -125,6 +132,7 @@
         android:layout_marginRight="121dp"
         android:text="¿Olvidaste tu contraseña?"
         android:textSize="15dp"
+        android:textColor="@color/colorBlanco"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

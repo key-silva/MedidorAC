@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Medidor Corriente</string>
+    <string name="app_name">Tesla Electric</string>
     <string name="yes">OK</string>
     <string name="no">Cancelar</string>
 </resources>

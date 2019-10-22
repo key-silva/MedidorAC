@@ -52,15 +52,12 @@ public class limite_de_consumo_electrico extends AppCompatActivity {
                 });
 
         int limiteMensual = preferences.getInt("limiteMensual", 0);
-
         TextView Carg2 = findViewById(R.id.Carga2);
         Carg2.setText(String.valueOf(limiteMensual)+" Cordobas");
-
         // SeekBar
         SeekBar seekBar2 = (SeekBar) findViewById(R.id.seekbar2);
         seekBar2.setMax(5000);
         seekBar2.setProgress(limiteMensual);
-
 
         seekBar2.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
@@ -75,11 +72,9 @@ public class limite_de_consumo_electrico extends AppCompatActivity {
                         TextView Carga2 = findViewById(R.id.Carga2);
                         Carga2.setText(String.valueOf(progress)+" Cordobas");
                     }
-
                     //hace un llamado  cuando se toca la perilla
                     public void onStartTrackingTouch(SeekBar seekBar) {
                     }
-
                     //hace un llamado  cuando se detiene la perilla
                     public void onStopTrackingTouch(SeekBar seekBar) {
                     }

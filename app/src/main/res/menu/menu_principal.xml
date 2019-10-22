@@ -3,40 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/refresh"
+        android:icon="@drawable/ic_refresh"
         android:title="refrescar"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_refresh"/>
+        app:showAsAction="ifRoom" />
 
     <item
-        android:title="Ajustes"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_ajuste">
-        <menu>
-            <item
-                android:id="@+id/itemsub1"
-                android:title="Limite"
-                android:icon="@mipmap/tarifa"
-                app:showAsAction="ifRoom|withText" />
-            <item
-                android:id="@+id/itemsub4"
-                android:title="Graficas"
-                android:icon="@mipmap/graficas"
-                app:showAsAction="ifRoom|withText" />
-            <item
-                android:id="@+id/itemsub6"
-                android:title="Ahorro"
-                android:icon="@mipmap/ahorrodinner"
-                app:showAsAction="ifRoom|withText" />
-            <item
-                android:id="@+id/itemsub2"
-                android:title="Cuenta"
-                android:icon="@mipmap/user2"
-                app:showAsAction="ifRoom|withText" />
-            <item
-                android:id="@+id/itemsub3"
-                android:title="Cerrar Sesión"
-                android:icon="@mipmap/exit"
-                app:showAsAction="ifRoom|withText" />
-        </menu>
-    </item>
+        android:id="@+id/itemsub1"
+        android:title="Limite"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/itemsub4"
+        android:title="Graficas"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/itemsub6"
+        android:title="Ahorro"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/itemsub2"
+        android:title="Cuenta"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/itemsub3"
+        android:title="Cerrar Sesión"
+        app:showAsAction="never" />
+
 </menu>

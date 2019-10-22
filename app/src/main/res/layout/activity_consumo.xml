@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     tools:context=".consumo">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="217dp"
-        android:layout_height="193dp"
+        android:layout_width="216dp"
+        android:layout_height="230dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="224dp"
+        android:layout_marginTop="204dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,8 +23,8 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="243dp"
-        android:layout_height="241dp"
+        android:layout_width="212dp"
+        android:layout_height="239dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="116dp"
@@ -43,20 +42,20 @@
         android:layout_height="221dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:src="@mipmap/globo1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.676"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
 
     <TextView
         android:id="@+id/textK"
-        android:layout_width="169dp"
-        android:layout_height="64dp"
+        android:layout_width="166dp"
+        android:layout_height="43dp"
         android:layout_marginTop="72dp"
         android:layout_marginBottom="8dp"
         android:text="000 kWH"
@@ -76,6 +75,7 @@
         android:text="00 W"
         android:textColor="@color/colorBlanco"
         android:textSize="30dp"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintHorizontal_bias="0.175"
@@ -94,10 +94,10 @@
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.756"
+        app:layout_constraintHorizontal_bias="0.519"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.437" />
+        app:layout_constraintVertical_bias="0.272" />
 
     <TextView
         android:id="@+id/fechaActual"
@@ -180,6 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Total Actual"
+        android:textColor="@color/colorBlanco"
         app:layout_constraintEnd_toEndOf="@+id/textK"
         app:layout_constraintHorizontal_bias="0.548"
         app:layout_constraintStart_toStartOf="@+id/textK"
@@ -192,7 +193,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="20dp"
-        android:text="Tarifa Actual de Pago:"
+        android:text="Pago de consumo:"
         android:textColor="@color/black"
         android:textSize="18dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -261,7 +262,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:text="watt"
+        android:text="Potencia"
+        android:textColor="@color/colorBlanco"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="@+id/textW"
@@ -272,7 +274,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Horas"
+        android:text="Total horas"
+        android:textColor="@color/colorBlanco"
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="@+id/textH"
         app:layout_constraintStart_toStartOf="@+id/textH"

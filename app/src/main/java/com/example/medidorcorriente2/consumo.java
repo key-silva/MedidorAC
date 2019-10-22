@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -41,13 +42,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class consumo extends AppCompatActivity {
     public static String indmedidor;
     public static String fecha_mysql;
     public static int ano, mes, dia;
     public static float Kwh, Watt, Horas;
-    public static float total_pago = 0;
+    public static float total_pago;
     RequestQueue requestQueue;
 
     NotificationCompat.Builder notificacion;
@@ -58,8 +60,6 @@ public class consumo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consumo);
 
-        peticiones_insercion();
-        peticiones();
 
         //tiempo de ejecucion
         SharedPreferences preferences = getSharedPreferences("datosgenerales", Context.MODE_PRIVATE);
@@ -67,20 +67,52 @@ public class consumo extends AppCompatActivity {
         TextView mostrarMedidor = findViewById(R.id.numeroMedidor);
         mostrarMedidor.setText("Medidor No:" + indmedidor);
         setFechaActual();
-        //hilo de notificacion de respuesta de arduino mini
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                peticiones();
-                notificacion_mensuales();
+
+        peticiones_insercion();
+        peticiones();
+        notificacion_mensuales();
+        notificacion_diario();
+
+        time time = new time();
+        time.execute();
+
+    }
+
+    public void hilo() {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void ejecutar(){
+        time time = new time();
+        time.execute();
+    }
+    public class time extends AsyncTask<Void, Integer, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            for (int i = 1; i <= 3; i++) {
+                hilo();
             }
-        }, 2000);
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            peticiones();
+            notificacion_mensuales();
+            notificacion_diario();
+            ejecutar();
+        }
     }
 
     public void peticiones() {
-        K("https://www.orthodentalnic.com/arduino/K.php");
-        W("https://www.orthodentalnic.com/arduino/W.php");
-        H("https://www.orthodentalnic.com/arduino/H.php");
+        K("http://192.168.43.207/K.php");
+        W("http://192.168.43.207/W.php");
+        H("http://192.168.43.207/H.php");
     }
 
     public void peticiones_insercion() {
@@ -94,6 +126,8 @@ public class consumo extends AppCompatActivity {
 
         TextView uno1 = findViewById(R.id.textK);
         uno1.setText(formato.format(Float.parseFloat(uno)) + "Kwh");
+        float p= Float.parseFloat(formato.format(Float.parseFloat(uno)));
+        total_pago=p*6;
         TextView uno2 = findViewById(R.id.textW);
         uno2.setText(dos + "W");
         TextView uno3 = findViewById(R.id.textH);
@@ -103,24 +137,52 @@ public class consumo extends AppCompatActivity {
     public void notificacion_mensuales() {
         SharedPreferences preferences = getSharedPreferences("datosgenerales", Context.MODE_PRIVATE);
         int limiteMensual = preferences.getInt("limiteMensual", 0);
-        // notificacon de mostracion de la imagenes de lsp datos
+        //notificacon de mostracion de la imagenes de lo datos
         notificacion = new NotificationCompat.Builder(this);
         notificacion.setAutoCancel(true);
-        if (total_pago >= limiteMensual) {
-            notificacion.setSmallIcon(R.mipmap.bombilla);
-            notificacion.setTicker("Limite de consumo");
-            notificacion.setPriority(Notification.PRIORITY_HIGH);
-            notificacion.setWhen(System.currentTimeMillis());
-            notificacion.setContentTitle("Ahorro Mensual");
-            notificacion.setContentText("Limite de consumo al Maximo");
+        if (limiteMensual > 0) {
+            if (total_pago >= limiteMensual) {
+                notificacion.setSmallIcon(R.mipmap.bombilla);
+                notificacion.setTicker("Limite de consumo");
+                notificacion.setPriority(Notification.PRIORITY_HIGH);
+                notificacion.setWhen(System.currentTimeMillis());
+                notificacion.setContentTitle("Ahorro Mensual");
+                notificacion.setContentText("Limite de consumo al Maximo");
 
-            Intent intent = new Intent(consumo.this, Graficas_vistas.class);
-            PendingIntent pendingIntent;
-            pendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{intent}, PendingIntent.FLAG_UPDATE_CURRENT);
-            notificacion.setContentIntent(pendingIntent);
+                Intent intent = new Intent(consumo.this, lista_porducto_electronicos.class);
+                PendingIntent pendingIntent;
+                pendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{intent}, PendingIntent.FLAG_UPDATE_CURRENT);
+                notificacion.setContentIntent(pendingIntent);
 
-            NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            nm.notify(idUnica, notificacion.build());
+                NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                nm.notify(idUnica, notificacion.build());
+            }
+        }
+
+    }
+    public void notificacion_diario() {
+        SharedPreferences preferences = getSharedPreferences("datosgenerales", Context.MODE_PRIVATE);
+        int limiteDiario = preferences.getInt("limiteDiario", 0);
+        //notificacon de mostracion de la imagenes de lo datos
+        notificacion = new NotificationCompat.Builder(this);
+        notificacion.setAutoCancel(true);
+        if (limiteDiario > 0) {
+            if (total_pago >= limiteDiario) {
+                notificacion.setSmallIcon(R.mipmap.bombilla);
+                notificacion.setTicker("Limite de consumo");
+                notificacion.setPriority(Notification.PRIORITY_HIGH);
+                notificacion.setWhen(System.currentTimeMillis());
+                notificacion.setContentTitle("Ahorro Mensual");
+                notificacion.setContentText("Limite de consumo al Maximo");
+
+                Intent intent = new Intent(consumo.this, lista_porducto_electronicos.class);
+                PendingIntent pendingIntent;
+                pendingIntent = PendingIntent.getActivities(this, 0, new Intent[]{intent}, PendingIntent.FLAG_UPDATE_CURRENT);
+                notificacion.setContentIntent(pendingIntent);
+
+                NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                nm.notify(idUnica, notificacion.build());
+            }
         }
 
     }
@@ -166,7 +228,11 @@ public class consumo extends AppCompatActivity {
                 Intent intent7 = new Intent(consumo.this, lista_porducto_electronicos.class);
                 startActivity(intent7);
                 return true;
-
+                case R.id.itemsub2:
+                consumo.this.finish();
+                Intent intent8 = new Intent(consumo.this, cuenta_datos_personales.class);
+                startActivity(intent8);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -206,6 +272,7 @@ public class consumo extends AppCompatActivity {
         }, ano, mes, dia);
         datePickerDialog.show();
     }
+
     public void spinner2(View view) {
         DatePickerDialog datePickerDialog;
         datePickerDialog = new DatePickerDialog(consumo.this, new DatePickerDialog.OnDateSetListener() {
@@ -226,30 +293,36 @@ public class consumo extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                DecimalFormat formato = new DecimalFormat();
-                formato.setMaximumFractionDigits(2); //Numero maximo de decimales a mostrar
+               try {
+                   DecimalFormat formato = new DecimalFormat();
+                   formato.setMaximumFractionDigits(2); //Numero maximo de decimales a mostrar
 
-                Kd.setText(String.valueOf(formato.format(Float.parseFloat(response))) + " Kwh");
-                Kwh = Float.parseFloat(response);
-                pago.setText(String.valueOf(formato.format(Kwh * 5)) + " Cordobas");
-                total_pago = Kwh * 5;
+                   Kd.setText(String.valueOf(formato.format(Float.parseFloat(response))) + " Kwh");
+                   Kwh = Float.parseFloat(response);
+                   pago.setText(String.valueOf(formato.format(Kwh * 5)) + " Cordobas");
+                   total_pago = Kwh * 6;
 
-                //base de datos
-                SharedPreferences preferences = getSharedPreferences("datosgenerales", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("K", response);
-                editor.commit();
+                   //base de datos
+                   SharedPreferences preferences = getSharedPreferences("datosgenerales", Context.MODE_PRIVATE);
+                   SharedPreferences.Editor editor = preferences.edit();
+                   editor.putString("K", response);
+                   editor.commit();
+               }catch (Exception e){
+                   Kd.setText("0 Kwh");
+                   Kwh = Float.parseFloat(response);
+                   pago.setText("0 Cordobas");
+               }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parametross = new HashMap<String, String>();
-                parametross.put("user", "valor");
+                parametross.put("fecha", fecha_mysql);
                 return parametross;
             }
         };
@@ -262,24 +335,28 @@ public class consumo extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ww.setText(String.valueOf(response + " W"));
-                Watt = Float.parseFloat(response);
-                //base de datos
-                SharedPreferences preferences = getSharedPreferences("datosgenerales", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("W", response);
-                editor.commit();
+               try {
+                   ww.setText(String.valueOf(response + " W"));
+                   Watt = Float.parseFloat(response);
+                   //base de datos
+                   SharedPreferences preferences = getSharedPreferences("datosgenerales", Context.MODE_PRIVATE);
+                   SharedPreferences.Editor editor = preferences.edit();
+                   editor.putString("W", response);
+                   editor.commit();
+               }catch (Exception e){
+                   ww.setText("0 W");
+               }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parametross = new HashMap<String, String>();
-                parametross.put("user", "valor");
+                parametross.put("fecha", fecha_mysql);
                 return parametross;
             }
         };
@@ -292,24 +369,28 @@ public class consumo extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                ww.setText(String.valueOf(response + "H"));
-                Horas = Float.parseFloat(response);
-                //base de datos
-                SharedPreferences preferences = getSharedPreferences("datosgenerales", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("H", response);
-                editor.commit();
+                try {
+                    ww.setText(String.valueOf(response + "H"));
+                    Horas = Float.parseFloat(response);
+                    //base de datos
+                    SharedPreferences preferences = getSharedPreferences("datosgenerales", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("H", response);
+                    editor.commit();
+                }catch (Exception e){
+                    ww.setText("0 H");
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "No Internet", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parametross = new HashMap<String, String>();
-                parametross.put("user", "valor");
+                parametross.put("fecha", fecha_mysql);
                 return parametross;
             }
         };
