@@ -47,6 +47,7 @@ public class cuenta_datos_personales extends AppCompatActivity {
         departamento = findViewById(R.id.Editext204);
         direccion = findViewById(R.id.Editext205);
 
+
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
