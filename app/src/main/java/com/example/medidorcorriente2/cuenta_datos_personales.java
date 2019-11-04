@@ -1,5 +1,4 @@
 package com.example.medidorcorriente2;
-
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -58,7 +57,7 @@ public class cuenta_datos_personales extends AppCompatActivity {
         } else {
             medidor = (String) savedInstanceState.getSerializable("medidor");
         }
-        datos_totales("https://www.orthodentalnic.com/arduino/todo_generales.php");
+        datos_totales("http://192.168.43.207/todo_generales.php");
     }
 
     @Override
@@ -107,7 +106,7 @@ public class cuenta_datos_personales extends AppCompatActivity {
         if (valor1.equals(" ") && valor2.equals(" ") && valor3.equals(" ") && valor4.equals(" ")) {
             Toast.makeText(getApplicationContext(), "Revisar datos Formulario", Toast.LENGTH_SHORT).show();
         } else {
-            ejecutarServices("https://www.orthodentalnic.com/arduino/actualizardatos.php");
+            ejecutarServices("http://192.168.43.207/actualizardatos.php");
             Toast.makeText(getApplicationContext(), "Datos Guardados Exito", Toast.LENGTH_SHORT).show();
         }
 

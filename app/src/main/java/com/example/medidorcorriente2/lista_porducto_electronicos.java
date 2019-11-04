@@ -24,7 +24,7 @@ public class lista_porducto_electronicos extends AppCompatActivity {
         ListView listItemView;
         listView = (ListView) findViewById(R.id.listacategoria);
         String[] listItemsValue = new String[]{"Grandes electrodomésticos", "Pequeños electrodomésticos",
-                "Equipoa informáticos y telecomunicaciones",
+                "Equipos informáticos y telecomunicaciones",
                 "Aparatos de alumbrado", "Herramientas eléctricas y eléctronicas",
                 "Juguetes y equipos deportivos y de tiempo libre",
                 "Aparatos médicos",
@@ -39,7 +39,10 @@ public class lista_porducto_electronicos extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "Numero="+position, Toast.LENGTH_SHORT).show();
+                lista_porducto_electronicos.this.finish();
+                Intent intent4 = new Intent(lista_porducto_electronicos.this, list_uno.class);
+                intent4.putExtra("posicion",position);
+                startActivity(intent4);
             }
         });
 

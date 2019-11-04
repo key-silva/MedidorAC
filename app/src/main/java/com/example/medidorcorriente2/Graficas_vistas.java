@@ -19,7 +19,7 @@ public class Graficas_vistas extends AppCompatActivity {
         mWebView = (WebView) findViewById(R.id.grafica1);
         WebSettings webSettings = mWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("http://192.168.43.207/arduino/grafica_barra.php");
+        mWebView.loadUrl("http://192.168.43.207/grafica_barra.php");
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

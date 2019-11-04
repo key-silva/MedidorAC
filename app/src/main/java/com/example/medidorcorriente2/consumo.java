@@ -102,17 +102,40 @@ public class consumo extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
-            peticiones();
-            notificacion_mensuales();
-            notificacion_diario();
-            ejecutar();
+            try {
+                peticiones();
+                notificacion_mensuales();
+                notificacion_diario();
+                ejecutar();
+            }catch (Exception e){
+                TextView Kd = findViewById(R.id.textK);
+                TextView pago = findViewById(R.id.pago);
+                Kd.setText("0 Kwh");
+                pago.setText("0 Cordobas");
+                TextView ww = findViewById(R.id.textW);
+                ww.setText("0 W");
+                TextView wwk = findViewById(R.id.textH);
+                wwk.setText("0 H");
+            }
+
         }
     }
 
     public void peticiones() {
-        K("http://192.168.43.207/K.php");
-        W("http://192.168.43.207/W.php");
-        H("http://192.168.43.207/H.php");
+        try {
+            K("http://192.168.43.207/K.php");
+            W("http://192.168.43.207/W.php");
+            H("http://192.168.43.207/H.php");
+        }catch (Exception e){
+            TextView Kd = findViewById(R.id.textK);
+            TextView pago = findViewById(R.id.pago);
+            Kd.setText("0 Kwh");
+            pago.setText("0 Cordobas");
+            TextView ww = findViewById(R.id.textW);
+            ww.setText("0 W");
+            TextView wwk = findViewById(R.id.textH);
+            wwk.setText("0 H");
+        }
     }
 
     public void peticiones_insercion() {
@@ -126,7 +149,7 @@ public class consumo extends AppCompatActivity {
 
         TextView uno1 = findViewById(R.id.textK);
         uno1.setText(formato.format(Float.parseFloat(uno)) + "Kwh");
-        float p= Float.parseFloat(formato.format(Float.parseFloat(uno)));
+        float p= Float.parseFloat(uno);
         total_pago=p*6;
         TextView uno2 = findViewById(R.id.textW);
         uno2.setText(dos + "W");
@@ -267,10 +290,11 @@ public class consumo extends AppCompatActivity {
                 TextView date = findViewById(R.id.fechaActual);
                 date.setText(dayOfMonth + "/" + month + "/" + year);
                 fecha_mysql = year + "/" + month + "/" + dayOfMonth;
-//                set_fechadistribuida(year, month, dayOfMonth);
+//              set_fechadistribuida(year, month, dayOfMonth);
             }
         }, ano, mes, dia);
         datePickerDialog.show();
+      peticiones();
     }
 
     public void spinner2(View view) {
@@ -285,6 +309,7 @@ public class consumo extends AppCompatActivity {
             }
         }, ano, mes, dia);
         datePickerDialog.show();
+        peticiones();
     }
 
     private void K(String url) {
