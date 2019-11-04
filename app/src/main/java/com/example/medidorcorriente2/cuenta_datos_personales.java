@@ -37,7 +37,6 @@ public class cuenta_datos_personales extends AppCompatActivity {
     public String valor3 = "";
     public EditText direccion;
     public String valor4 = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
